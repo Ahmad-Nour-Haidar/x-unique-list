@@ -1,8 +1,10 @@
 name: unique_list
-description: "A new Flutter package project."
-version: 0.0.1
-homepage:
-
+description: "A Flutter package that provides a list with unique elements based on a custom uniqueness condition."
+version: 1.0.2
+#author: Ahmad Nour Haidar
+homepage: https://github.com/Ahmad-Nour-Haidar
+# or repository if you prefer
+repository: https://github.com/Ahmad-Nour-Haidar/unique-list
 environment:
   sdk: ^3.5.0
   flutter: ">=1.17.0"
