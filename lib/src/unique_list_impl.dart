@@ -62,7 +62,7 @@ final class UniqueList<T> extends _BaseUniqueList<T> {
   }
 
   @override
-  bool removeOne(T item) {
+  bool remove(T item) {
     final uniqueValue = uniqueCondition(item);
     if (_uniqueItemsSet.contains(uniqueValue)) {
       _uniqueItemsSet.remove(uniqueValue);

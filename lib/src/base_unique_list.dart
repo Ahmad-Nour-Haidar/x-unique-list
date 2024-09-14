@@ -44,7 +44,7 @@ abstract class _BaseUniqueList<T> {
 
   /// Remove a single item
   /// Time Complexity: O(n + k) where n is the number of items in the list and k is the complexity of the uniqueCondition function
-  bool removeOne(T item);
+  bool remove(T item);
 
   /// Remove a single item based on a condition
   /// Returns true if an item was removed, false otherwise
