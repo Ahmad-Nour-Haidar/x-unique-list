@@ -1,16 +1,20 @@
 # UniqueList - A Dart/Flutter Package for Managing Unique Lists
 
-`UniqueList` is a utility package that ensures uniqueness in your lists based on a custom condition you define. It's perfect for managing collections of objects that must adhere to specific uniqueness rules.
+`UniqueList` is a utility package that ensures uniqueness in your lists based on a custom condition
+you define. It's perfect for managing collections of objects that must adhere to specific uniqueness
+rules.
 
-## Features
+## ✨ Features
 
-- 🆕 **Unique List Management**: Add, insert, or remove items while ensuring no duplicates based on a custom condition.
+- 🆕 **Unique List Management**: Add, insert, or remove items while ensuring no duplicates based on a
+  custom condition.
 - 🚀 **Fast Operations**: Optimized operations for adding, removing, and filtering items.
 - 🔄 **Replace & Modify**: Replace items by condition or unique value.
 - 🔍 **Check for Existence**: Quickly check if an item exists based on the uniqueness condition.
-- 📦 **Unmodifiable and Modifiable Access**: Retrieve unmodifiable and modifiable versions of the list as needed.
+- 📦 **Unmodifiable and Modifiable Access**: Retrieve unmodifiable and modifiable versions of the
+  list as needed.
 
-## Getting Started
+## 🚀 Getting Started
 
 To start using `UniqueList`, you need to add the following dependency to your `pubspec.yaml` file:
 
@@ -19,7 +23,14 @@ dependencies:
   unique_list: ^0.0.1
 ```
 
-## Usage
+```bash
+flutter pub get
+```
+```bash
+dart pub get
+```
+
+## 🔥 Usage
 
 ```dart
 import 'dart:developer';
@@ -73,3 +84,7 @@ void main() {
   bool exists = uniqueUsers.contains(User(1, 'Ahmad')); // true
 }
 ```
+
+## 📄 License
+
+This package is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
