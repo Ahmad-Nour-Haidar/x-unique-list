@@ -1,7 +1,7 @@
 part 'base_unique_list.dart';
 
 /// Concrete implementation of BaseXUniqueList
- class XUniqueList<T> extends _BaseXUniqueList<T> {
+final class XUniqueList<T> extends _BaseXUniqueList<T> {
   /// List to maintain the order of items
   List<T> _itemsList = [];
 
