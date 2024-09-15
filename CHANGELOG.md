@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.0.1 - Support for Dart and Flutter 🛠
+
+### 🔄 Changes:
+
+- Added support for both Dart and Flutter environments, making the package versatile across
+  projects.
+- Improved compatibility and removed unnecessary Flutter dependencies for Dart-only projects.
+- Fixed minor bugs in list manipulation functions for better performance and stability.
+
 ## 1.0.0 - Initial Release 🎉
 
 ### ✨ Features:
