@@ -1,6 +1,5 @@
-
 import 'package:flutter_test/flutter_test.dart';
-import 'package:unique_list/x_unique_list.dart';
+import 'package:x_unique_list/x_unique_list.dart';
 
 void main() {
   group('UniqueList Tests', () {
