@@ -29,7 +29,7 @@ To start using `XUniqueList`, you need to add the following dependency to your `
 
 ```yaml
 dependencies:
-  x_unique_list: ^1.0.2
+  x_unique_list: ^1.0.3
 ```
 
 ```bash
@@ -57,8 +57,8 @@ class User {
   // Override equality operator and hashCode for proper comparison
   @override
   bool operator ==(Object other) =>
-      identical(this, other) ||
-          (other is User && id == other.id && name == other.name);
+          identical(this, other) ||
+                  (other is User && id == other.id && name == other.name);
 
   @override
   int get hashCode => Object.hash(id, name);
@@ -79,12 +79,10 @@ void main() {
   uniqueUsers.add(User(2, 'Nour'));
 
   // Attempt to add a duplicate user (will not be added)
-  uniqueUsers
-      .add(User(1, 'Ahmad')); // This won't be added as ID 1 already exists
+  uniqueUsers.add(User(1, 'Ahmad')); // This won't be added as ID 1 already exists
 
   // Retrieve unmodifiable list of users
-  print(uniqueUsers.items
-      .toString()); // [User(id: 1, name: Ahmad), User(id: 2, name: Nour)]
+  print(uniqueUsers.items); // [User(id: 1, name: Ahmad), User(id: 2, name: Nour)]
 
   // Remove a user - ⚠️ NOTE: This may not work as expected
   // ⚠️ Won't work unless you override `==` and `hashCode` for User
@@ -102,16 +100,20 @@ void main() {
   // Check if list contains a user
   // ⚠️ Important Note on `contains` Method
   // 
-  // The `contains` method in `XUniqueList` relies on the `uniqueCondition` you define. In the example above, the `uniqueCondition` is based on the `id` field of the `User` class.
+  // The `contains` method in `XUniqueList` relies on the `uniqueCondition` you define.
+  // In the example above, the `uniqueCondition` is based on the `id` field of the `User` class.
   //
-  // This means that when you check for the existence of an item using `contains`, it only considers the value provided by the `uniqueCondition` function, not the entire object.
+  // This means that when you check for the existence of an item using `contains`,
+  // it only considers the value provided by the `uniqueCondition` function, not the entire object.
   //
   // For instance:
   bool exists = uniqueUsers.contains(User(1, 'Ahmad'));
   print(exists); // true
-  // Even though the name 'Ahmad' is different from any existing user, the contains method returns true because the id field (which is the unique condition) matches the ID of an existing user (ID = 1).
+  // Even though the name 'Ahmad' is different from any existing user, the contains method returns true
+  // because the id field (which is the unique condition) matches the ID of an existing user (ID = 1).
 
-  // To check for existence or remove items based on different criteria (such as the name), you can use the removeOneWhere method, which allows for more complex condition-based logic.
+  // To check for existence or remove items based on different criteria (such as the name),
+  // you can use the removeOneWhere method, which allows for more complex condition-based logic.
 }
 ```
 
