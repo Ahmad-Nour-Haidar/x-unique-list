@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.4
+
+### 🔄 Changes:
+
+- Improved `README.md` to provide clearer documentation and examples.
+
 ## 1.0.3
 
 ### 🔄 Changes:
