@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.2
+
+### 🔄 Changes:
+
+- Improved `README.md` to provide clearer documentation and examples.
+    - Added detailed sections for installation, usage, and methods.
+    - Updated examples and explanations for better clarity.
+
 ## 1.0.1 - Support for Dart and Flutter 🛠
 
 ### 🔄 Changes:
