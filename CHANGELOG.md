@@ -4,7 +4,7 @@
 
 ### ✨ Features:
 
-- **UniqueList** class with uniqueness enforcement using `uniqueCondition`.
+- **XUniqueList** class with uniqueness enforcement using `uniqueCondition`.
 - Added the following methods:
     - `add()`: Add a single item ensuring uniqueness.
     - `addAll()`: Add multiple items at once.

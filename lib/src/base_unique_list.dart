@@ -1,12 +1,12 @@
-part of 'unique_list_impl.dart';
+part of 'x_unique_list.dart';
 
 /// Abstract class that defines the structure and behavior of a unique list.
-abstract class _BaseUniqueList<T> {
+abstract class _BaseXUniqueList<T> {
   /// Function to determine the unique value for each item
   /// This function takes an item of type T and returns a dynamic value used for uniqueness
   final dynamic Function(T) uniqueCondition;
 
-  _BaseUniqueList(this.uniqueCondition);
+  _BaseXUniqueList(this.uniqueCondition);
 
   /// Retrieve items as unmodifiable list
   /// Time Complexity: O(n)

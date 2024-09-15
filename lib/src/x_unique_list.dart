@@ -1,7 +1,7 @@
 part 'base_unique_list.dart';
 
-/// Concrete implementation of BaseUniqueList
-final class UniqueList<T> extends _BaseUniqueList<T> {
+/// Concrete implementation of BaseXUniqueList
+final class XUniqueList<T> extends _BaseXUniqueList<T> {
   /// List to maintain the order of items
   List<T> _itemsList = [];
 
@@ -9,7 +9,7 @@ final class UniqueList<T> extends _BaseUniqueList<T> {
   Set<dynamic> _uniqueItemsSet = {};
 
   /// Constructor
-  UniqueList(super.uniqueCondition);
+  XUniqueList(super.uniqueCondition);
 
   @override
   List<T> get items => List.unmodifiable(_itemsList);
