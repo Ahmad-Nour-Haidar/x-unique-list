@@ -6,7 +6,7 @@ rules.
 
 ### Platform Support
 
-| Android |   iOS   |   Web   |  MacOS  |  Linux  | Windows |
+| Android |   IOS   |   Web   |  MacOS  |  Linux  | Windows |
 |:-------:|:-------:|:-------:|:-------:|:-------:|:-------:|
 | &#9989; | &#9989; | &#9989; | &#9989; | &#9989; | &#9989; |
 
