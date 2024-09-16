@@ -100,8 +100,8 @@ final class XUniqueList<T> extends _BaseXUniqueList<T> {
 
       if (oldUniqueValue == newUniqueValue && oldItem != newItem) {
         _itemsList[i] = newItem; // O(1)
-        _uniqueItemsSet.remove(oldUniqueValue); // O(1)
-        _uniqueItemsSet.add(newUniqueValue); // O(1)
+        // _uniqueItemsSet.remove(oldUniqueValue); // O(1)
+        // _uniqueItemsSet.add(newUniqueValue); // O(1)
         return true;
       }
     }
