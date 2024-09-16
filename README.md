@@ -4,6 +4,12 @@
 you define. It's perfect for managing collections of objects that must adhere to specific uniqueness
 rules.
 
+### Platform Support
+
+| Android |   iOS   |   Web   |  MacOS  |  Linux  | Windows |
+|:-------:|:-------:|:-------:|:-------:|:-------:|:-------:|
+| &#9989; | &#9989; | &#9989; | &#9989; | &#9989; | &#9989; |
+
 ## 📜 Table of Contents
 
 - [✨ Features](#-features)
