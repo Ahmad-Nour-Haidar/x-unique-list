@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.5
+
+### 🔄 Changes:
+
+- ➕ Add example
+
 ## 1.0.4
 
 ### 🔄 Changes:
