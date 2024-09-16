@@ -54,20 +54,17 @@ class User {
 
   User(this.id, this.name);
 
-  // Override equality operator and hashCode for proper comparison
+  @override
+  String toString() => 'User(id: $id, name: $name)';
+
+  // Override equality operator to compare both id and name
   @override
   bool operator ==(Object other) =>
-          identical(this, other) ||
-                  (other is User && id == other.id && name == other.name);
+      identical(this, other) ||
+          (other is User && id == other.id && name == other.name);
 
   @override
   int get hashCode => Object.hash(id, name);
-
-  // Override toString method to provide a custom string representation
-  @override
-  String toString() {
-    return 'User(id: $id, name: $name)';
-  }
 }
 
 void main() {
