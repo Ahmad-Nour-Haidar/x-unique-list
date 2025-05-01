@@ -12,17 +12,17 @@ final class XUniqueList<T> extends _BaseXUniqueList<T> {
   XUniqueList(super.uniqueCondition);
 
   @override
-  List<T> get items => List.unmodifiable(_itemsList);
+  List<T> get unmodifiableItems => List.unmodifiable(_itemsList);
 
   @override
-  List<T> get data => _itemsList;
+  List<T> get items => _itemsList;
 
   @override
   T operator [](int index) => _itemsList[index];
 
   @override
   bool add(T item) {
-    final uniqueValue = uniqueCondition(item);
+    final uniqueValue = _uniqueCondition(item);
     if (_uniqueItemsSet.contains(uniqueValue)) return false;
     _itemsList.add(item);
     _uniqueItemsSet.add(uniqueValue);
@@ -32,7 +32,7 @@ final class XUniqueList<T> extends _BaseXUniqueList<T> {
   @override
   int addAll(List<T> newItems) {
     int count = 0;
-    for (final T item in newItems) {
+    for (final item in newItems) {
       if (add(item)) count++;
     }
     return count;
@@ -40,7 +40,7 @@ final class XUniqueList<T> extends _BaseXUniqueList<T> {
 
   @override
   bool insert(int index, T item) {
-    final uniqueValue = uniqueCondition(item);
+    final uniqueValue = _uniqueCondition(item);
     if (_uniqueItemsSet.contains(uniqueValue)) return false;
     _itemsList.insert(index, item);
     _uniqueItemsSet.add(uniqueValue);
@@ -50,8 +50,8 @@ final class XUniqueList<T> extends _BaseXUniqueList<T> {
   @override
   int insertAll(int index, Iterable<T> newItems) {
     int count = 0;
-    for (final T item in newItems) {
-      final uniqueValue = uniqueCondition(item);
+    for (final item in newItems) {
+      final uniqueValue = _uniqueCondition(item);
       if (!_uniqueItemsSet.contains(uniqueValue)) {
         _itemsList.insert(index + count, item);
         _uniqueItemsSet.add(uniqueValue);
@@ -63,7 +63,7 @@ final class XUniqueList<T> extends _BaseXUniqueList<T> {
 
   @override
   bool remove(T item) {
-    final uniqueValue = uniqueCondition(item);
+    final uniqueValue = _uniqueCondition(item);
     if (_uniqueItemsSet.contains(uniqueValue)) {
       _uniqueItemsSet.remove(uniqueValue);
       return _itemsList.remove(item);
@@ -72,11 +72,11 @@ final class XUniqueList<T> extends _BaseXUniqueList<T> {
   }
 
   @override
-  bool removeOneWhere(bool Function(T) test) {
+  bool removeOneWhere(bool Function(T item) test) {
     for (int i = 0; i < _itemsList.length; i++) {
       final item = _itemsList[i];
       if (test(item)) {
-        final uniqueValue = uniqueCondition(item);
+        final uniqueValue = _uniqueCondition(item);
         _uniqueItemsSet.remove(uniqueValue); // Remove from the set
         _itemsList.removeAt(i); // Remove from the list
         return true; // Successfully removed
@@ -86,17 +86,17 @@ final class XUniqueList<T> extends _BaseXUniqueList<T> {
   }
 
   @override
-  void removeWhere(bool Function(T e) test) {
+  void removeWhere(bool Function(T item) test) {
     return _itemsList.removeWhere(test);
   }
 
   @override
   bool replaceOne(T newItem) {
-    final newUniqueValue = uniqueCondition(newItem);
+    final newUniqueValue = _uniqueCondition(newItem);
 
     for (int i = 0; i < _itemsList.length; i++) {
       final oldItem = _itemsList[i];
-      final oldUniqueValue = uniqueCondition(oldItem);
+      final oldUniqueValue = _uniqueCondition(oldItem);
 
       if (oldUniqueValue == newUniqueValue && oldItem != newItem) {
         _itemsList[i] = newItem; // O(1)
@@ -109,12 +109,13 @@ final class XUniqueList<T> extends _BaseXUniqueList<T> {
   }
 
   @override
-  bool replaceOneWhere(T newItem, bool Function(T) test) {
+  bool replaceOneWhere(T newItem, bool Function(T item) test) {
     for (int i = 0; i < _itemsList.length; i++) {
+      // O(n)
       if (test(_itemsList[i])) {
         final oldItem = _itemsList[i];
-        final oldUniqueValue = uniqueCondition(oldItem);
-        final newUniqueValue = uniqueCondition(newItem);
+        final oldUniqueValue = _uniqueCondition(oldItem);
+        final newUniqueValue = _uniqueCondition(newItem);
 
         _itemsList[i] = newItem; // O(1)
         _uniqueItemsSet.remove(oldUniqueValue); // O(1)
@@ -131,12 +132,12 @@ final class XUniqueList<T> extends _BaseXUniqueList<T> {
   }
 
   @override
-  List<T> where(bool Function(T) test) {
+  List<T> where(bool Function(T item) test) {
     return _itemsList.where(test).toList(); // O(n)
   }
 
   @override
-  T? firstWhere(bool Function(T) test) {
+  T? firstWhere(bool Function(T item) test) {
     try {
       return _itemsList.firstWhere(test); // O(n)
     } catch (e) {
@@ -145,24 +146,21 @@ final class XUniqueList<T> extends _BaseXUniqueList<T> {
   }
 
   @override
-  int indexWhere(bool Function(T) test) {
-    for (int i = 0; i < _itemsList.length; i++) {
-      if (test(_itemsList[i])) {
-        return i;
-      }
-    }
-    return -1; // Return -1 if no item matches the condition
+  int indexWhere(bool test(T item), [int start = 0]) {
+    assert(start >= 0, 'The start index must be greater than or equal to 0.');
+    return _itemsList.indexWhere(test, start);
   }
 
   @override
-  int indexOf(T item) {
-    final uniqueValue = uniqueCondition(item);
+  int indexOf(T item, [int start = 0]) {
+    assert(start >= 0, 'The start index must be greater than or equal to 0.');
+    final uniqueValue = _uniqueCondition(item);
 
     // Early return if the unique value is not in the set
     if (!_uniqueItemsSet.contains(uniqueValue)) return -1;
 
-    for (int i = 0; i < _itemsList.length; i++) {
-      if (uniqueCondition(_itemsList[i]) == uniqueValue) {
+    for (int i = start; i < _itemsList.length; i++) {
+      if (_uniqueCondition(_itemsList[i]) == uniqueValue) {
         return i;
       }
     }
@@ -171,7 +169,7 @@ final class XUniqueList<T> extends _BaseXUniqueList<T> {
   }
 
   @override
-  bool contains(T item) => _uniqueItemsSet.contains(uniqueCondition(item));
+  bool contains(T item) => _uniqueItemsSet.contains(_uniqueCondition(item));
 
   @override
   int get length => _itemsList.length;

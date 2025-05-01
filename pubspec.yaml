@@ -1,6 +1,6 @@
 name: x_unique_list
 description: "A Flutter - Dart package that provides a list with unique elements based on a custom uniqueness condition."
-version: 1.0.5
+version: 1.0.6
 #author: Ahmad Nour Haidar <ahmadnouehaidar@gmail.com>
 homepage: https://github.com/Ahmad-Nour-Haidar
 repository: https://github.com/Ahmad-Nour-Haidar/x-unique-list
@@ -13,10 +13,5 @@ environment:
 dependencies:
 
 dev_dependencies:
-  lints: ^4.0.0
+  lints: ^5.0.0
   test: ^1.24.0
-
-# or repository if you prefer
-#environment:
-#  sdk: ^3.5.0
-#  flutter: ">=1.17.0"

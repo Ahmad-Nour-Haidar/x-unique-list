@@ -4,17 +4,17 @@ part of 'x_unique_list.dart';
 abstract class _BaseXUniqueList<T> {
   /// Function to determine the unique value for each item
   /// This function takes an item of type T and returns a dynamic value used for uniqueness
-  final dynamic Function(T) uniqueCondition;
+  final dynamic Function(T e) _uniqueCondition;
 
-  _BaseXUniqueList(this.uniqueCondition);
+  _BaseXUniqueList(this._uniqueCondition);
 
   /// Retrieve items as unmodifiable list
   /// Time Complexity: O(n)
-  List<T> get items;
+  List<T> get unmodifiableItems;
 
   /// Retrieve items as unmodifiable list
   /// Time Complexity: O(1)
-  List<T> get data;
+  List<T> get items;
 
   /// The object at the given [index] in the list.
   ///

@@ -23,7 +23,6 @@ class User {
 void main() {
   // Create an XUniqueList of Users, where uniqueness is based on the 'id' field
   final XUniqueList<User> uniqueUsers = XUniqueList((user) => user.id);
-
   // Add some users
   uniqueUsers.add(User(1, 'Ahmad'));
   uniqueUsers.add(User(2, 'John'));

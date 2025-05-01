@@ -1,3 +1,3 @@
-library x_unique_list;
+library;
 
 export 'src/x_unique_list.dart';
