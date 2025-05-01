@@ -35,7 +35,7 @@ To start using `XUniqueList`, you need to add the following dependency to your `
 
 ```yaml
 dependencies:
-  x_unique_list: ^1.0.5
+  x_unique_list: ^1.0.7
 ```
 
 ```bash
@@ -125,11 +125,11 @@ void main() {
 The `XUniqueList` class provides various methods for managing unique lists. Here is a comprehensive
 overview of all the methods available:
 
-### `List<T> get items;`
+### `List<T> get unmodifiableItems;`
 
 - **Description**: Retrieve items as an unmodifiable list.
 
-### `List<T> get data;`
+### `List<T> get items;`
 
 - **Description**: Retrieve items as a modifiable list.
 
@@ -160,12 +160,12 @@ overview of all the methods available:
 
 - **Description**: Remove a single item.
 
-### `bool removeOneWhere(bool Function(T) test);`
+### `bool removeOneWhere(bool Function(T item) test);`
 
 - **Description**: Remove a single item based on a condition.
 - **Returns**: True if an item was removed, false otherwise.
 
-### `void removeWhere(bool Function(T e) test);`
+### `void removeWhere(bool Function(T item) test);`
 
 - **Description**: Remove items based on a condition.
 
@@ -173,7 +173,7 @@ overview of all the methods available:
 
 - **Description**: Replace an existing item with a new item based on unique condition.
 
-### `bool replaceOneWhere(T newItem, bool Function(T) test);`
+### `bool replaceOneWhere(T newItem, bool Function(T item) test);`
 
 - **Description**: Replace item that matches a condition with a new item.
 
@@ -182,20 +182,20 @@ overview of all the methods available:
 - **Description**: Sort the list in place using the provided [compare] function. If no [compare]
   function is provided, the list is sorted in natural order.
 
-### `List<T> where(bool Function(T) test);`
+### `List<T> where(bool Function(T item) test);`
 
 - **Description**: Method to filter items based on a condition.
 
-### `T? firstWhere(bool Function(T) test);`
+### `T? firstWhere(bool Function(T item) test);`
 
 - **Description**: Retrieve a single item based on a condition.
 
-### `int indexWhere(bool Function(T) test);`
+### `int indexWhere(bool Function(T item) test, [int start = 0]);`
 
 - **Description**: Returns the index of the first item that satisfies the provided [test] function.
 - **Returns**: -1 if no such item is found.
 
-### `int indexOf(T item);`
+### `int indexOf(T item, [int start = 0]);`
 
 - **Description**: Returns the index of the first occurrence of [item] in the list.
 - **Returns**: -1 if the item is not found.

@@ -49,11 +49,11 @@ abstract class _BaseXUniqueList<T> {
   /// Remove a single item based on a condition
   /// Returns true if an item was removed, false otherwise
   /// Time Complexity: O(n * (1 + k)) where n is the number of items and k is the complexity of the uniqueCondition function
-  bool removeOneWhere(bool Function(T) test);
+  bool removeOneWhere(bool Function(T item) test);
 
   /// Remove items based on a condition
   /// Time Complexity: O(n * (1 + k)) where n is the number of items and k is the complexity of the uniqueCondition function
-  void removeWhere(bool Function(T e) test);
+  void removeWhere(bool Function(T item) test);
 
   /// Replace an existing item with a new item based on unique condition
   /// Time Complexity: O(n * (1 + k)) where n is the number of items and k is the complexity of the uniqueCondition function
@@ -61,7 +61,7 @@ abstract class _BaseXUniqueList<T> {
 
   /// Replace item that matches a condition with a new item
   /// Time Complexity: O(n * (1 + k)) where n is the number of items and k is the complexity of the uniqueCondition function
-  bool replaceOneWhere(T newItem, bool Function(T) test);
+  bool replaceOneWhere(T newItem, bool Function(T item) test);
 
   /// Sort the list in place using the provided [compare] function.
   /// If no [compare] function is provided, the list is sorted in natural order.
@@ -70,21 +70,21 @@ abstract class _BaseXUniqueList<T> {
 
   /// Method to filter items based on a condition
   /// Time Complexity: O(n) where n is the number of items in the list
-  List<T> where(bool Function(T) test);
+  List<T> where(bool Function(T item) test);
 
   /// Retrieve a single item based on a condition
   /// Time Complexity: O(n) where n is the number of items in the list
-  T? firstWhere(bool Function(T) test);
+  T? firstWhere(bool Function(T item) test);
 
   /// Returns the index of the first item that satisfies the provided [test] function.
   /// Returns -1 if no such item is found.
   /// Time Complexity: O(n)
-  int indexWhere(bool Function(T) test);
+  int indexWhere(bool Function(T item) test, [int start = 0]);
 
   /// Returns the index of the first occurrence of [item] in the list.
   /// Returns -1 if the item is not found.
   /// Time Complexity: O(n)
-  int indexOf(T item);
+  int indexOf(T item, [int start = 0]);
 
   /// Check if the list contains an item based on the unique condition
   /// Time Complexity: O(1 + k) where k is the complexity of the uniqueCondition function

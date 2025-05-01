@@ -146,7 +146,7 @@ final class XUniqueList<T> extends _BaseXUniqueList<T> {
   }
 
   @override
-  int indexWhere(bool test(T item), [int start = 0]) {
+  int indexWhere(bool Function(T item) test, [int start = 0]) {
     assert(start >= 0, 'The start index must be greater than or equal to 0.');
     return _itemsList.indexWhere(test, start);
   }

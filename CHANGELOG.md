@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.7
+
+### 🔄 Changes:
+
+- 🔧 Fix example
+
 ## 1.0.6
 
 ### 🔄 Changes:
