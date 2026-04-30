@@ -31,7 +31,7 @@ To start using `XUniqueList`, you need to add the following dependency to your `
 
 ```yaml
 dependencies:
-  x_unique_list: ^1.1.0
+  x_unique_list: ^1.1.1
 ```
 
 ```bash
