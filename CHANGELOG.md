@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.1.1
+- 📝 README.md
+
 ## 1.1.0
 
 ### ✨ Added
