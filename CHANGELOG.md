@@ -1,5 +1,67 @@
 # Changelog
 
+## 1.1.0
+
+### ✨ Added
+
+- Added `addOrReplace()`:
+    - Adds item if unique key does not exist.
+    - Replaces existing item if key matches but value differs.
+    - Returns `false` if identical item already exists (no-op).
+- Added `addAllOrReplace()`:
+    - Batch version of `addOrReplace`.
+    - Returns count of items added + replaced.
+
+### 🔧 Improved
+
+- `remove()`:
+    - No longer relies on `==` for removal.
+    - Now removes based on `uniqueCondition` → more predictable behavior.
+- `removeWhere()`:
+    - Now correctly keeps `_uniqueItemsSet` in sync with `_itemsList`.
+    - Fixes potential data corruption bug.
+- `firstWhere()`:
+    - Removed exception-based flow.
+    - Now uses safe iteration → avoids unnecessary try/catch overhead.
+- `where()`:
+    - Returns `Iterable<T>` instead of `List<T>` to avoid unnecessary allocation.
+- `addAll()`:
+    - Now accepts `Iterable<T>` instead of `List<T>` → more flexible API.
+- `insertAll()`:
+    - Improved documentation and clarified complexity behavior.
+- `unmodifiableItems`:
+    - Uses `List<T>.unmodifiable` explicitly.
+
+### ⚡ Performance
+
+- Reduced unnecessary allocations:
+    - `where()` no longer creates a new list.
+- Improved predictability of operations by aligning all mutations with `_uniqueItemsSet`.
+- Documented precise time complexity for all public methods.
+
+### 🐛 Fixed
+
+- Critical bug where `removeWhere()` did not update `_uniqueItemsSet`.
+- Potential inconsistency between `_itemsList` and `_uniqueItemsSet`.
+- Edge cases in `remove()` where item existed in set but not properly removed from list.
+
+### 🧠 Behavioral Changes
+
+- `remove(T item)`:
+    - Now removes based on `uniqueCondition` instead of relying on object equality.
+- `addOrReplace()`:
+    - Explicitly distinguishes between:
+        - add
+        - replace
+        - no-op (identical item)
+
+### 📚 Documentation
+
+- Added detailed time complexity annotations for all methods.
+- Improved method-level comments for clarity and maintainability.
+
+---
+
 ## 1.0.7
 
 ### 🔄 Changes:
@@ -42,37 +104,26 @@
 
 ### 🔄 Changes:
 
-- Added support for both Dart and Flutter environments, making the package versatile across
-  projects.
-- Improved compatibility and removed unnecessary Flutter dependencies for Dart-only projects.
-- Fixed minor bugs in list manipulation functions for better performance and stability.
+- Added support for both Dart and Flutter environments.
+- Improved compatibility and removed unnecessary Flutter dependencies.
+- Fixed minor bugs in list manipulation functions.
 
 ## 1.0.0 - Initial Release 🎉
 
 ### ✨ Features:
 
-- **XUniqueList** class with uniqueness enforcement using `uniqueCondition`.
-- Added the following methods:
-    - `add()`: Add a single item ensuring uniqueness.
-    - `addAll()`: Add multiple items at once.
-    - `insert()`: Insert an item at a specified index.
-    - `remove()`: Remove an item by value.
-    - `removeOneWhere()`: Remove the first item that matches a condition.
-    - `replaceOneWhere()`: Replace an item based on a matching condition.
-    - `replaceOne()`: Replace an item if it matches based on unique condition.
+- `XUniqueList` with uniqueness enforcement via `uniqueCondition`.
+- Core operations: `add`, `addAll`, `insert`, `remove`, `replaceOne`, etc.
 
 ### 🛠 Utility Functions:
 
-- `contains()`: Check if an item is in the list based on the unique condition.
-- `clear()`: Clear all items from the list.
-- `length`: Retrieve the number of items in the list.
-- `isEmpty` and `isNotEmpty`: Check if the list is empty or not.
+- `contains`, `clear`, `length`, `isEmpty`, `isNotEmpty`.
 
 ### 📦 Access:
 
-- `items`: Retrieve an unmodifiable list of items.
-- `data`: Retrieve a modifiable list of items.
+- `items` (modifiable)
+- `unmodifiableItems`
 
 ### ✅ Testing:
 
-- Unit tests provided for all major functionality ensuring correctness and reliability.
+- Unit tests for core functionality.

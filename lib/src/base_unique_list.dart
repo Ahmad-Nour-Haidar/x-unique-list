@@ -2,17 +2,17 @@ part of 'x_unique_list.dart';
 
 /// Abstract class that defines the structure and behavior of a unique list.
 abstract class _BaseXUniqueList<T> {
-  /// Function to determine the unique value for each item
-  /// This function takes an item of type T and returns a dynamic value used for uniqueness
+  /// Function to determine the unique value for each item.
+  /// Takes an item of type [T] and returns a dynamic value used for uniqueness.
   final dynamic Function(T e) _uniqueCondition;
 
-  _BaseXUniqueList(this._uniqueCondition);
+  const _BaseXUniqueList(this._uniqueCondition);
 
-  /// Retrieve items as unmodifiable list
+  /// Returns items as an unmodifiable list.
   /// Time Complexity: O(n)
   List<T> get unmodifiableItems;
 
-  /// Retrieve items as unmodifiable list
+  /// Returns items as a modifiable list.
   /// Time Complexity: O(1)
   List<T> get items;
 
@@ -21,88 +21,109 @@ abstract class _BaseXUniqueList<T> {
   /// The [index] must be a valid index of this list,
   /// which means that `index` must be non-negative and
   /// less than [length].
+  /// Time Complexity: O(1)
   T operator [](int index);
 
-  /// Add a single item
-  /// Time Complexity: O(1 + k) where k is the complexity of the uniqueCondition function
+  /// Adds a single [item] if its unique value is not already present.
+  /// Returns true if the item was added, false if it already exists.
+  /// Time Complexity: O(1)
   bool add(T item);
 
-  /// Add multiple items
+  /// Adds each item in [newItems] that has a unique value not already present.
   /// Returns the number of items that were successfully added.
-  /// Time Complexity: O(m * (1 + k)) where m is the number of newItems and k is the average complexity of the uniqueCondition function
-  int addAll(List<T> newItems);
+  /// Time Complexity: O(m) where m is the number of [newItems]
+  int addAll(Iterable<T> newItems);
 
-  /// Insert an item at the specified index.
-  /// Returns true if the item was inserted successfully, false if the item already exists.
-  /// Time Complexity: O(n + k) where n is the number of items in the list and k is the complexity of the uniqueCondition function
+  /// Inserts [item] at [index] if its unique value is not already present.
+  /// Returns true if the item was inserted, false if it already exists.
+  /// Time Complexity: O(n) where n is the number of items in the list
   bool insert(int index, T item);
 
-  /// Insert multiple items at the specified index.
+  /// Inserts each item in [newItems] at consecutive positions starting from [index],
+  /// skipping items whose unique value is already present.
   /// Returns the number of items that were successfully inserted.
-  /// Time Complexity: O(m * (n + k)) where m is the number of newItems, n is the number of items in the list, and k is the complexity of the uniqueCondition function
+  /// Time Complexity: O(m * n) where m is the number of [newItems] and n is the number of items in the list
   int insertAll(int index, Iterable<T> newItems);
 
-  /// Remove a single item
-  /// Time Complexity: O(n + k) where n is the number of items in the list and k is the complexity of the uniqueCondition function
+  /// Removes the item whose unique value matches that of [item].
+  /// Does NOT rely on the [==] operator of [T].
+  /// Returns true if the item was found and removed, false otherwise.
+  /// Time Complexity: O(n) where n is the number of items in the list
   bool remove(T item);
 
-  /// Remove a single item based on a condition
-  /// Returns true if an item was removed, false otherwise
-  /// Time Complexity: O(n * (1 + k)) where n is the number of items and k is the complexity of the uniqueCondition function
+  /// Removes the first item that satisfies [test].
+  /// Returns true if an item was removed, false otherwise.
+  /// Time Complexity: O(n) where n is the number of items in the list
   bool removeOneWhere(bool Function(T item) test);
 
-  /// Remove items based on a condition
-  /// Time Complexity: O(n * (1 + k)) where n is the number of items and k is the complexity of the uniqueCondition function
+  /// Removes all items that satisfy [test], keeping the unique set in sync.
+  /// Time Complexity: O(n) where n is the number of items in the list
   void removeWhere(bool Function(T item) test);
 
-  /// Replace an existing item with a new item based on unique condition
-  /// Time Complexity: O(n * (1 + k)) where n is the number of items and k is the complexity of the uniqueCondition function
+  /// Replaces the item whose unique value matches that of [newItem], only if
+  /// the existing item differs from [newItem].
+  /// Returns true if a replacement occurred, false otherwise.
+  /// Time Complexity: O(n) where n is the number of items in the list
   bool replaceOne(T newItem);
 
-  /// Replace item that matches a condition with a new item
-  /// Time Complexity: O(n * (1 + k)) where n is the number of items and k is the complexity of the uniqueCondition function
+  /// Replaces the first item that satisfies [test] with [newItem],
+  /// updating the unique set if the unique value changes.
+  /// Returns true if a replacement occurred, false otherwise.
+  /// Time Complexity: O(n) where n is the number of items in the list
   bool replaceOneWhere(T newItem, bool Function(T item) test);
 
-  /// Sort the list in place using the provided [compare] function.
+  /// Adds [newItem] if its unique value is not already present.
+  /// If the unique value exists but the stored item differs, replaces it in place.
+  /// Returns true if the item was added or replaced, false if an identical item already exists.
+  /// Time Complexity: O(n) where n is the number of items in the list
+  bool addOrReplace(T newItem);
+
+  /// Calls [addOrReplace] for each item in [newItems].
+  /// Returns the total count of items that were added or replaced.
+  /// Time Complexity: O(m * n) where m is the number of [newItems] and n is the number of items in the list
+  int addAllOrReplace(Iterable<T> newItems);
+
+  /// Sorts the list in place using the provided [compare] function.
   /// If no [compare] function is provided, the list is sorted in natural order.
   /// Time Complexity: O(n log n)
   void sort([int Function(T a, T b)? compare]);
 
-  /// Method to filter items based on a condition
+  /// Returns all items that satisfy [test].
   /// Time Complexity: O(n) where n is the number of items in the list
-  List<T> where(bool Function(T item) test);
+  Iterable<T> where(bool Function(T item) test);
 
-  /// Retrieve a single item based on a condition
+  /// Returns the first item that satisfies [test], or null if none is found.
   /// Time Complexity: O(n) where n is the number of items in the list
   T? firstWhere(bool Function(T item) test);
 
-  /// Returns the index of the first item that satisfies the provided [test] function.
+  /// Returns the index of the first item that satisfies [test], starting from [start].
   /// Returns -1 if no such item is found.
-  /// Time Complexity: O(n)
+  /// Time Complexity: O(n) where n is the number of items in the list
   int indexWhere(bool Function(T item) test, [int start = 0]);
 
-  /// Returns the index of the first occurrence of [item] in the list.
-  /// Returns -1 if the item is not found.
-  /// Time Complexity: O(n)
+  /// Returns the index of the first item whose unique value matches that of [item],
+  /// starting from [start]. Returns -1 if the item is not found.
+  /// Does NOT rely on the [==] operator of [T].
+  /// Time Complexity: O(n) where n is the number of items in the list
   int indexOf(T item, [int start = 0]);
 
-  /// Check if the list contains an item based on the unique condition
-  /// Time Complexity: O(1 + k) where k is the complexity of the uniqueCondition function
+  /// Returns true if an item with the same unique value as [item] exists in the list.
+  /// Time Complexity: O(1)
   bool contains(T item);
 
-  /// Get the length of the list
+  /// The number of items in the list.
   /// Time Complexity: O(1)
   int get length;
 
-  /// Check if the list is empty
+  /// Whether the list contains no items.
   /// Time Complexity: O(1)
   bool get isEmpty;
 
-  /// Check if the list is not empty
+  /// Whether the list contains at least one item.
   /// Time Complexity: O(1)
   bool get isNotEmpty;
 
-  /// Clear all items from the list and set
+  /// Removes all items from the list and clears the unique set.
   /// Time Complexity: O(1)
   void clear();
 }

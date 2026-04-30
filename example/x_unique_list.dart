@@ -1,6 +1,5 @@
 import 'package:x_unique_list/x_unique_list.dart';
 
-// A simple class to represent a user
 class User {
   final int id;
   final String name;
@@ -10,7 +9,6 @@ class User {
   @override
   String toString() => 'User(id: $id, name: $name)';
 
-  // Override equality operator to compare both id and name
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -21,54 +19,27 @@ class User {
 }
 
 void main() {
-  // Create an XUniqueList of Users, where uniqueness is based on the 'id' field
-  final XUniqueList<User> uniqueUsers = XUniqueList((user) => user.id);
-  // Add some users
-  uniqueUsers.add(User(1, 'Ahmad'));
-  uniqueUsers.add(User(2, 'John'));
-  uniqueUsers.add(User(3, 'Alice'));
+  // Uniqueness based on `id`
+  final users = XUniqueList<User>((u) => u.id);
 
-  // Try to add a user with the same 'id' (will not be added due to uniqueness condition)
-  uniqueUsers.add(User(1, 'Duplicate Ahmad'));
+  users.add(User(1, 'Ahmad'));
+  users.add(User(2, 'John'));
 
-  // Print the list of users
-  print('Users in the list:');
-  for (final user in uniqueUsers.items) {
-    print(user);
-  }
+  // ❌ Same id → will NOT be added
+  users.add(User(1, 'Duplicate'));
 
-  // Check if a user exists in the list (based on the unique condition, i.e., 'id')
-  bool exists = uniqueUsers.contains(User(1, 'Ahmad'));
-  print('\nDoes user with id 1 exist? $exists');
+  // ✅ Replace (same id, different value)
+  users.addOrReplace(User(1, 'Updated Ahmad'));
 
-  // Replace a user
-  uniqueUsers.replaceOne(User(1, 'Updated Ahmad'));
+  // ❌ No-op (identical item)
+  final result = users.addOrReplace(User(1, 'Updated Ahmad'));
+  print('Was added/replaced? $result'); // false
 
-  // Remove a user by object comparison
-  uniqueUsers.remove(User(2, 'John'));
+  // Remove by condition (safe)
+  users.removeOneWhere((u) => u.id == 2);
 
-  // ⚠️ Note: This won't work unless the User class supports equality (== operator).
-  // If you override the == operator and hashCode in the User class, this method will work.
-  // Otherwise, you should use the "removeOneWhere" method to remove an item based on a condition:
-
-  // Correct way: use removeOneWhere to remove a user based on a condition
-  uniqueUsers.removeOneWhere((user) => user.id == 2);
-
-  // Print the updated list of users
-  print('\nUsers after updates:');
-  for (final user in uniqueUsers.items) {
-    print(user);
+  print('\nFinal users:');
+  for (final u in users.items) {
+    print(u);
   }
 }
-
-/// Output:
-// Users in the list:
-// User(id: 1, name: Ahmad)
-// User(id: 2, name: John)
-// User(id: 3, name: Alice)
-//
-// Does user with id 1 exist? true
-//
-// Users after updates:
-// User(id: 1, name: Updated Ahmad)
-// User(id: 3, name: Alice)
