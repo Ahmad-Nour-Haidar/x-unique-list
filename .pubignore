@@ -1,0 +1,5 @@
+# Files that belong in the repository but not in the published archive.
+*.iml
+.idea/
+.github/
+.metadata

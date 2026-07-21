@@ -1,5 +1,72 @@
 # Changelog
 
+## 2.0.0
+
+A correctness and performance release. See the migration table in the README.
+
+### 🐛 Fixed
+
+- **`replaceOneWhere()` could corrupt the collection.** When the replacement's key already belonged
+  to another element, it overwrote the matched element anyway and removed the *old* key from the
+  index — leaving two elements sharing one key, a `length` that disagreed with the index, and a
+  `contains()` that returned `false` for an element that was present. It now refuses the
+  replacement and returns `false`. **If you use this method, upgrade.**
+- **`items` handed out the live internal list**, so `list.items.add(x)` bypassed every uniqueness
+  check. It is now an unmodifiable view.
+- **`clear()` replaced the internal list** instead of emptying it, silently detaching any `items`
+  reference a caller was already holding. It now clears in place.
+- Argument validation used `assert`, which is stripped in release builds. It now throws
+  `RangeError` / `ArgumentError` consistently in every mode.
+
+### ⚡ Performance
+
+- Rebuilt on a key → position index. `lookup`, `containsKey`, `contains`, `indexOf`, `indexOfKey`,
+  `addOrReplace`, `replaceOne` and `update` are now **O(1)**; they were O(n).
+- The key function is now called **once per element**, when the element is inserted, instead of
+  O(n) times per operation. Expensive key functions no longer dominate the cost.
+- `sort()` is now **stable**, unlike `List.sort`.
+
+### ✨ Added
+
+- **`Iterable<T>` conformance** — `for (final x in list)`, `map`, `where`, `fold`, `any`, `[...list]`
+  and the rest of the `Iterable` API now work directly on the collection.
+- **`syncWith(source, {preserveOrder})`** — reconciles the collection against a source: adds what is
+  new, replaces what changed, removes what disappeared, leaves equal elements untouched. Returns
+  `(added:, updated:, removed:)`.
+- **Key-based API**: `lookup`, `containsKey`, `indexOfKey`, `removeKey`, `removeKeys`, `retainKeys`,
+  `putIfAbsent`, `update`, `keys`, `keyOf`, `toMap`.
+- **`XObservableUniqueList`** — notifies listeners on change, pure Dart, with `batch()` to coalesce
+  a group of mutations into a single notification. Bulk operations already notify once.
+- **`XUniqueListBase<T, K>`** — a public interface to depend on when faking the collection in tests.
+- List essentials: `operator []=`, `first`, `last`, `removeAt`, `removeLast`, `removeAll`,
+  `retainWhere`, `sublist`, `reversed`, `shuffle`, `firstWhereOrNull`, `lastWhereOrNull`.
+- Reordering: `reorder(oldIndex, newIndex)` and `swap(a, b)`, for drag-and-drop lists.
+- Set algebra: `union`, `intersection`, `difference`, `operator +`.
+- Constructors and value semantics: `XUniqueList.from`, `copy()`, `operator ==`, `hashCode`,
+  `toString()`.
+
+### 💥 Breaking
+
+- `XUniqueList<T>` is now `XUniqueList<T, K>`; the key type is explicit and bound to `Object`, so
+  keys can no longer be `null`.
+- `items` is unmodifiable. Use `toList()` for a modifiable copy.
+- `firstWhere` now throws `StateError` when nothing matches, matching `Iterable`. The old
+  null-returning behaviour is available as `firstWhereOrNull`.
+- `removeWhere` returns the number removed instead of `void`.
+- `addAllOrReplace` returns `(added:, updated:)` instead of a single `int`.
+- `contains` accepts `Object?` and returns `false` for non-`T` values, matching `Iterable`.
+- `unmodifiableItems` is deprecated in favour of `items`; it will be removed in 3.0.0.
+
+### 📚 Documentation & tooling
+
+- Documentation moved onto the public `XUniqueListBase` interface, so it now renders on pub.dev
+  (previously it lived on a private class and was invisible).
+- Test suite rewritten: an invariant harness asserted after every mutation, plus a fuzz test that
+  cross-checks 20,000 random operations against a naive reference implementation.
+- Added CI (format, analyze with `--fatal-infos`, test on the oldest and newest supported SDK,
+  publish dry-run), stricter analysis options, and a `.pubignore` so IDE files stay out of the
+  published archive.
+
 ## 1.1.1
 - 📝 README.md
 

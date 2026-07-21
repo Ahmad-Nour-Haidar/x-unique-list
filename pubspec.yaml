@@ -1,14 +1,26 @@
 name: x_unique_list
-description: "A Flutter - Dart package that provides a list with unique elements based on a custom uniqueness condition."
-version: 1.1.1
-#author: Ahmad Nour Haidar <ahmadnouehaidar@gmail.com>
-homepage: https://github.com/Ahmad-Nour-Haidar
+description: >-
+  An ordered Dart collection in which no two elements share the same key,
+  where the key is derived by a function you supply rather than by ==.
+  O(1) lookup, upsert and membership. Zero dependencies.
+version: 2.0.0
+
+homepage: https://github.com/Ahmad-Nour-Haidar/x-unique-list
 repository: https://github.com/Ahmad-Nour-Haidar/x-unique-list
+issue_tracker: https://github.com/Ahmad-Nour-Haidar/x-unique-list/issues
+documentation: https://pub.dev/documentation/x_unique_list/latest/
+
 license: MIT
+
+topics:
+  - collections
+  - list
+  - data-structures
+  - state-management
 
 environment:
   sdk: ^3.5.0
 
 dev_dependencies:
   lints: ^5.0.0
-  test: ^1.24.0
+  test: ^1.25.0

@@ -1,0 +1,6 @@
+include: ../analysis_options.yaml
+
+linter:
+  rules:
+    # The example is documented by its comments, not by dartdoc.
+    public_member_api_docs: false
